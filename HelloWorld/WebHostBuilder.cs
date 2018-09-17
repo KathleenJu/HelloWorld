@@ -14,7 +14,7 @@ namespace HelloWorld
                 .Configure(app =>
                 {
                     app.Run(async context =>
-                    {
+                    {                        
                         var requestMethod = context.Request.Method;
                         await GetResponse(requestMethod, context);
                     });
@@ -26,12 +26,12 @@ namespace HelloWorld
             {
                 case "GET":
                     context.Response.StatusCode = 200;
-                    await context.Response.WriteAsync("Hello Kathleen - the time on the server is");
+                    await context.Response.WriteAsync("Hello Kathleen");
                     break;
                 case "POST":
                     context.Response.StatusCode = 200;
                     var body = new StreamReader(context.Request.Body).ReadToEnd();
-                    await context.Response.WriteAsync("new userr " + body);
+                    await context.Response.WriteAsync("new user" + body);
                     break;
             }
         }
