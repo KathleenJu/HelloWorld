@@ -16,18 +16,7 @@ namespace HelloWorld
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            WebHostBuilder.CreateWebHostBuilder(args).Build().Run();
         }
-
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .Configure(app =>
-                {
-                    app.Run(async context =>
-                    {
-                        context.Response.StatusCode = 200;
-                        await context.Response.WriteAsync($"Hello Kathleen");
-                    });
-                });
     }
 }
