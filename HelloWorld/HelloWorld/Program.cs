@@ -16,7 +16,7 @@ namespace HelloWorld
     {
         public static void Main(string[] args)
         {
-            WebHostBuilder.CreateWebHostBuilder(args).Build().Run();
+            WebHostBuilder.StartWebHost(args);
         }
     }
 }
