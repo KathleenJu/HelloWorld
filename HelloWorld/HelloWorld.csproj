@@ -8,4 +8,24 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="HelloWorld\obj\Debug\netcoreapp2.1\HelloWorld.AssemblyInfo.cs" />
+    <Compile Remove="HelloWorld\Program.cs" />
+    <Compile Remove="HelloWorld\RequestMethodFactory.cs" />
+    <Compile Remove="HelloWorld\WebHostBuilder.cs" />
+    <Compile Remove="HelloWorldTests\Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="HelloWorld\obj\Debug\netcoreapp2.1\HelloWorld.AssemblyInfoInputs.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="HelloWorld\Properties\launchSettings.json" />
+    <Content Remove="HelloWorldTests\packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="HelloWorld\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="HelloWorld\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="HelloWorld\Properties\launchSettings.json" />
+    <_ContentIncludedByDefault Remove="HelloWorldTests\packages.config" />
+  </ItemGroup>
 </Project>
