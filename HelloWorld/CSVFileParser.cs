@@ -11,7 +11,7 @@ namespace HelloWorld
     public class CSVFileParser
     {
         private readonly string _filePath;
-        private readonly string _permanentUser = "Kathleen";
+        private const string _permanentUser = "Kathleen";
 
         public CSVFileParser(string filePath)
         {

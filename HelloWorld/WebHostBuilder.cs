@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
@@ -20,14 +21,13 @@ namespace HelloWorld
                 {
                     app.Run(async context =>
                     {
-                        var requestMethod = context.Request.Method;
-                        await Foo(requestMethod, context);
+                        await Foo(context);
                     });
                 }).Build().Run();
 
-        private static async Task Foo(string requestMethod, HttpContext context)
+        private static async Task Foo(HttpContext context)
         {
-            switch (requestMethod)
+            switch (context.Request.Method)
             {
                 case "GET":
                     await GetResponseForGETRequest(context);
@@ -47,10 +47,9 @@ namespace HelloWorld
         private static async Task GetResponseForPUTRequest(HttpContext context)
         {
             context.Response.StatusCode = 200;
-            var test = context.Request;
-            var name = context.Request.Query.Keys.First();
-            var body = new StreamReader(context.Request.Body).ReadToEnd();
-            _csvFileParser.UpdateUser(name, body);
+            var nameToBeUpdated = context.Request.Path.Value.Trim('/');
+            var newName = new StreamReader(context.Request.Body).ReadToEnd();
+            _csvFileParser.UpdateUser(nameToBeUpdated, newName);
             await context.Response.WriteAsync(_csvFileParser.GetUsers());
         }
 
@@ -73,8 +72,8 @@ namespace HelloWorld
         private static async Task GetResponseForPOSTRequest(HttpContext context)
         {
             context.Response.StatusCode = 200;
-            var body = new StreamReader(context.Request.Body).ReadToEnd();
-            _csvFileParser.AddNewUser(body);
+            var newName = new StreamReader(context.Request.Body).ReadToEnd();
+            _csvFileParser.AddNewUser(newName);
             await context.Response.WriteAsync(_csvFileParser.GetUsers());
         }
     }
