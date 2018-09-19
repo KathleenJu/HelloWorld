@@ -13,7 +13,7 @@ namespace HelloWorld
 {
     public static class WebHostBuilder
     {
-        private static readonly CSVFileParser _csvFileParser = new CSVFileParser(@"Files/users.csv");
+        private static readonly UserManager UserManager = new UserManager(@"Files/users.csv");
 
         public static void StartWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
@@ -44,28 +44,29 @@ namespace HelloWorld
             }
         }
 
+        //greet(){ "Hi x.GetUsers(fileContent) - time on the server..."}
         private static async Task GetResponseForPUTRequest(HttpContext context)
         {
             context.Response.StatusCode = 200;
             var nameToBeUpdated = context.Request.Path.Value.Trim('/');
             var newName = new StreamReader(context.Request.Body).ReadToEnd();
-            _csvFileParser.UpdateUser(nameToBeUpdated, newName);
-            await context.Response.WriteAsync(_csvFileParser.GetUsers());
+            UserManager.UpdateUser(nameToBeUpdated, newName);
+            await context.Response.WriteAsync(UserManager.GetUsers());
         }
 
         private static async Task GetResponseForDELETERequest(HttpContext context)
         {
             context.Response.StatusCode = 200;
             var body = new StreamReader(context.Request.Body).ReadToEnd();
-            _csvFileParser.RemoveUser(body);
+            UserManager.RemoveUser(body);
 
-            await context.Response.WriteAsync(_csvFileParser.GetUsers());
+            await context.Response.WriteAsync(UserManager.GetUsers());
         }
 
         private static async Task GetResponseForGETRequest(HttpContext context)
         {
             context.Response.StatusCode = 200;
-            await context.Response.WriteAsync(_csvFileParser.GetUsers());
+            await context.Response.WriteAsync(UserManager.GetUsers());
         }
 
         //doing two things in switch statement, it says post but function is getting something(from its name)
@@ -73,8 +74,8 @@ namespace HelloWorld
         {
             context.Response.StatusCode = 200;
             var newName = new StreamReader(context.Request.Body).ReadToEnd();
-            _csvFileParser.AddNewUser(newName);
-            await context.Response.WriteAsync(_csvFileParser.GetUsers());
+            UserManager.AddNewUser(newName);
+            await context.Response.WriteAsync(UserManager.GetUsers());
         }
     }
 }

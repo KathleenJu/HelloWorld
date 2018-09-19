@@ -3,16 +3,16 @@ using Xunit;
 
 namespace HelloWorld.Tests
 {
-    public class CSVFileParserShould
+    public class UserManagerShould
     { 
-        private readonly CSVFileParser _csvFileParser = new CSVFileParser(@"../../../../HelloWorld.Tests/Files/testUsers.csv");
+        private readonly UserManager _userManager = new UserManager(@"../../../../HelloWorld.Tests/Files/testUsers.csv");
         
         
         [Fact]
         public void AddNewUserToCSVFile()
         {
-            _csvFileParser.AddNewUser("Bob");
-            var actualUsers = _csvFileParser.GetUsers();
+            _userManager.AddNewUser("Bob");
+            var actualUsers = _userManager.GetUsers();
             var expectedUsers = "Kathleen and Bob";
             
             Assert.Equal(expectedUsers, actualUsers);
@@ -21,8 +21,8 @@ namespace HelloWorld.Tests
         [Fact]
         public void RemoveAUserFromCSVFile()
         {
-            _csvFileParser.RemoveUser("Bob");
-            var actualUsers = _csvFileParser.GetUsers();
+            _userManager.RemoveUser("Bob");
+            var actualUsers = _userManager.GetUsers();
             var expectedUsers = "Kathleen";
             
             Assert.Equal(expectedUsers, actualUsers);
@@ -31,9 +31,9 @@ namespace HelloWorld.Tests
         [Fact]
         public void UpdateNameOfUserFromCSVFile()
         {
-            _csvFileParser.AddNewUser("Bob");
-            _csvFileParser.UpdateUser("Bob", "Bobby");
-            var actualUsers = _csvFileParser.GetUsers();
+            _userManager.AddNewUser("Bob");
+            _userManager.UpdateUser("Bob", "Bobby");
+            var actualUsers = _userManager.GetUsers();
             var expectedUsers = "Kathleen and Bobby";
             
             Assert.Equal(expectedUsers, actualUsers);
@@ -42,9 +42,9 @@ namespace HelloWorld.Tests
         [Fact]
         public void GetAllUsersInTheCorrectFormatWhenThereIsOnlyOneUser()
         {
-            _csvFileParser.RemoveUser("Will");
-            _csvFileParser.RemoveUser("Bob");
-            var actualUsers = _csvFileParser.GetUsers();
+            _userManager.RemoveUser("Will");
+            _userManager.RemoveUser("Bob");
+            var actualUsers = _userManager.GetUsers();
             var expectedUsers = "Kathleen";
             
             Assert.Equal(expectedUsers, actualUsers);
@@ -53,9 +53,9 @@ namespace HelloWorld.Tests
         [Fact]
         public void GetAllUsersInTheCorrectFormatWhenThereIsTwoUsers()
         {
-            _csvFileParser.RemoveUser("Will");
-            _csvFileParser.AddNewUser("Bob");
-            var actualUsers = _csvFileParser.GetUsers();
+            _userManager.RemoveUser("Will");
+            _userManager.AddNewUser("Bob");
+            var actualUsers = _userManager.GetUsers();
             var expectedUsers = "Kathleen and Bob";
             
             Assert.Equal(expectedUsers, actualUsers);
@@ -64,9 +64,9 @@ namespace HelloWorld.Tests
         [Fact]
         public void GetAllUsersInTheCorrectFormatWhenThereIsThreeUsers()
         {
-            _csvFileParser.AddNewUser("Bob");
-            _csvFileParser.AddNewUser("Will");
-            var actualUsers = _csvFileParser.GetUsers();
+            _userManager.AddNewUser("Bob");
+            _userManager.AddNewUser("Will");
+            var actualUsers = _userManager.GetUsers();
             var expectedUsers = "Kathleen, Bob and Will";
             
             Assert.Equal(expectedUsers, actualUsers);

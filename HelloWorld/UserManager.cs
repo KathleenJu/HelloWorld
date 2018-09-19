@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore.Internal;
 
 namespace HelloWorld
 {
-    public class CSVFileParser
+    public class UserManager
     {
         private readonly string _filePath;
         private const string _permanentUser = "Kathleen";
 
-        public CSVFileParser(string filePath)
+        public UserManager(string filePath)
         {
             _filePath = filePath;
         }
