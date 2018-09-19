@@ -23,8 +23,7 @@ namespace HelloWorld
 
         public void RewriteFileWithNewContent(string filePath, IEnumerable<string> newContent)
         {
-            File.AppendAllLines(filePath, newContent);
+            File.WriteAllLines(filePath, newContent);
         }
-
     }
 }
