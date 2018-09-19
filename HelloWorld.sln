@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{8DAEC688-E82D-4D7D-8431-63D90BE14035}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldTests", "HelloWorldTests\HelloWorldTests.csproj", "{F91E4D17-26A5-44FA-8AA8-9A88FC6E0CD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Tests", "HelloWorld.Tests\HelloWorld.Tests.csproj", "{760A0AEC-2B50-4479-88C0-496A70CF8FBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{8DAEC688-E82D-4D7D-8431-63D90BE14035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DAEC688-E82D-4D7D-8431-63D90BE14035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DAEC688-E82D-4D7D-8431-63D90BE14035}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F91E4D17-26A5-44FA-8AA8-9A88FC6E0CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F91E4D17-26A5-44FA-8AA8-9A88FC6E0CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F91E4D17-26A5-44FA-8AA8-9A88FC6E0CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F91E4D17-26A5-44FA-8AA8-9A88FC6E0CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{760A0AEC-2B50-4479-88C0-496A70CF8FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{760A0AEC-2B50-4479-88C0-496A70CF8FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{760A0AEC-2B50-4479-88C0-496A70CF8FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{760A0AEC-2B50-4479-88C0-496A70CF8FBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
