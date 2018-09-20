@@ -13,7 +13,7 @@ namespace HelloWorld
 {
     public static class WebHostBuilder
     {
-        private static readonly Greeter Greeter = new Greeter();
+        private static readonly Greeter Names = new Greeter();
         private static readonly CSVFileIO CSVFileIO = new CSVFileIO();
         private const string _filePath = @"Files/users.csv";
 
@@ -36,29 +36,29 @@ namespace HelloWorld
                 case "GET":
                 {
                     var fileContent = CSVFileIO.ReadFileContent(_filePath);
-                    Greeter.SetCurrentNames(fileContent);
+                    Names.SetCurrentNames(fileContent);
                     
-                    var greeting = Greeter.Greet(dateTime);
+                    var greeting = Names.Greet(dateTime);
                     await context.Response.WriteAsync(greeting);
                     break;
                 }
                 case "POST":
                 {
                     var newName = new StreamReader(context.Request.Body).ReadToEnd();
-                    Greeter.AddName(newName);
-                    CSVFileIO.RewriteFileWithNewContent(_filePath, Greeter.CurrentNames);
+                    Names.AddName(newName);
+                    CSVFileIO.RewriteFileWithNewContent(_filePath, Names.CurrentNames);
 
-                    var greeting = Greeter.Greet(dateTime);
+                    var greeting = Names.Greet(dateTime);
                     await context.Response.WriteAsync(greeting);
                     break;
                 }
                 case "DELETE":
                 {
                     var nameToBeDeleted = new StreamReader(context.Request.Body).ReadToEnd();
-                    Greeter.RemoveName(nameToBeDeleted);
-                    CSVFileIO.RewriteFileWithNewContent(_filePath, Greeter.CurrentNames);
+                    Names.RemoveName(nameToBeDeleted);
+                    CSVFileIO.RewriteFileWithNewContent(_filePath, Names.CurrentNames);
 
-                    var greeting = Greeter.Greet(dateTime);
+                    var greeting = Names.Greet(dateTime);
                     await context.Response.WriteAsync(greeting);
                     break;
                 }
@@ -66,10 +66,10 @@ namespace HelloWorld
                 {
                     var nameToBeUpdated = context.Request.Path.Value.Trim('/');
                     var newName = new StreamReader(context.Request.Body).ReadToEnd();
-                    Greeter.UpdateUser(nameToBeUpdated, newName);
-                    CSVFileIO.RewriteFileWithNewContent(_filePath, Greeter.CurrentNames);
+                    Names.UpdateUser(nameToBeUpdated, newName);
+                    CSVFileIO.RewriteFileWithNewContent(_filePath, Names.CurrentNames);
 
-                    var greeting = Greeter.Greet(dateTime);
+                    var greeting = Names.Greet(dateTime);
                     await context.Response.WriteAsync(greeting);
                     break;
                 }
