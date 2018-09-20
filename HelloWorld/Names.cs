@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace HelloWorld
 {
+    //RENAME CLASS
     public class Names
     {
         private List<string> _currentNames;
@@ -18,7 +19,7 @@ namespace HelloWorld
             return _currentNames;
         }
         
-        public void AddName(string name)
+        public void Add(string name)
         {
             if (!_currentNames.Contains(name))
             {
@@ -27,7 +28,7 @@ namespace HelloWorld
 
         }
 
-        public void RemoveName(string name)
+        public void Remove(string name)
         {
             if (_currentNames.Contains(name) & name != _permanentUser)
             {
@@ -36,7 +37,7 @@ namespace HelloWorld
 
         }
 
-        public void UpdateUser(string nameToBeUpdated, string newName)
+        public void Update(string nameToBeUpdated, string newName)
         {
             _currentNames = _currentNames.Select(name => name == nameToBeUpdated ? newName : name).ToList();
 

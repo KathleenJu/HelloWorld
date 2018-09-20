@@ -15,7 +15,7 @@ namespace HelloWorld.Tests
         public void AddNewUser()
         {
             const string user = "Bob";
-            Names.AddName(user);
+            Names.Add(user);
             
             var actualUsers = Names.GetNames();
             var expectedUsers = new List<string> {"Kathleen", "Bob"};
@@ -27,7 +27,7 @@ namespace HelloWorld.Tests
         public void RemoveAUserFromCSVFile()
         {
             const string user = "Bob";
-            Names.RemoveName(user);
+            Names.Remove(user);
             
             var actualUsers = Names.GetNames();
             var expectedUsers = new List<string> {"Kathleen"};
@@ -39,9 +39,9 @@ namespace HelloWorld.Tests
         public void UpdateNameOfUserFromCSVFile()
         {
             const string nameToBeUpdated = "Bob";
-            Names.AddName(nameToBeUpdated);
+            Names.Add(nameToBeUpdated);
             const string newName = "Dave";
-            Names.UpdateUser(nameToBeUpdated, newName);
+            Names.Update(nameToBeUpdated, newName);
             
             var actualUsers = Names.GetNames();
             var expectedUsers = new List<string> {"Kathleen", "Dave"};

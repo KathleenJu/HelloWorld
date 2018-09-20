@@ -13,9 +13,8 @@ namespace HelloWorld
 {
     public static class WebHostBuilder
     {
-        private static readonly Greeter Names = new Greeter();
-        private static readonly CSVFileIO CSVFileIO = new CSVFileIO();
-        private const string _filePath = @"Files/users.csv";
+        private static readonly Greeter _greeter = new Greeter();
+        private static readonly Names _names = new Names();
 
         public static void StartWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
@@ -35,45 +34,59 @@ namespace HelloWorld
             {
                 case "GET":
                 {
-                    var fileContent = CSVFileIO.ReadFileContent(_filePath);
-                    Names.SetCurrentNames(fileContent);
-                    
-                    var greeting = Names.Greet(dateTime);
+                    var greeting = GetGreeting(dateTime);
                     await context.Response.WriteAsync(greeting);
                     break;
                 }
                 case "POST":
                 {
-                    var newName = new StreamReader(context.Request.Body).ReadToEnd();
-                    Names.AddName(newName);
-                    CSVFileIO.RewriteFileWithNewContent(_filePath, Names.CurrentNames);
-
-                    var greeting = Names.Greet(dateTime);
+                    PostName(context);
+                    var greeting = GetGreeting(dateTime);
                     await context.Response.WriteAsync(greeting);
                     break;
                 }
                 case "DELETE":
                 {
-                    var nameToBeDeleted = new StreamReader(context.Request.Body).ReadToEnd();
-                    Names.RemoveName(nameToBeDeleted);
-                    CSVFileIO.RewriteFileWithNewContent(_filePath, Names.CurrentNames);
-
-                    var greeting = Names.Greet(dateTime);
+                    DeleteName(context);
+                    var greeting = GetGreeting(dateTime);
                     await context.Response.WriteAsync(greeting);
                     break;
                 }
                 case "PUT":
                 {
-                    var nameToBeUpdated = context.Request.Path.Value.Trim('/');
-                    var newName = new StreamReader(context.Request.Body).ReadToEnd();
-                    Names.UpdateUser(nameToBeUpdated, newName);
-                    CSVFileIO.RewriteFileWithNewContent(_filePath, Names.CurrentNames);
-
-                    var greeting = Names.Greet(dateTime);
+                    UpdateName(context);
+                    var greeting = GetGreeting(dateTime);
                     await context.Response.WriteAsync(greeting);
                     break;
                 }
             }
+        }
+
+        private static void UpdateName(HttpContext context)
+        {
+            var nameToBeUpdated = context.Request.Path.Value.Trim('/');
+            var newName = new StreamReader(context.Request.Body).ReadToEnd();
+            _names.Update(nameToBeUpdated, newName);
+        }
+
+        private static void DeleteName(HttpContext context)
+        {
+            var nameToBeDeleted = new StreamReader(context.Request.Body).ReadToEnd();
+            _names.Remove(nameToBeDeleted);
+        }
+
+        private static void PostName(HttpContext context)
+        {
+            var newName = new StreamReader(context.Request.Body).ReadToEnd();
+            _names.Add(newName);
+        }
+
+        private static string GetGreeting(DateTime dateTime)
+        {
+            var users = _names.GetNames();
+            var greeting = _greeter.Greet(users, dateTime);
+            
+            return greeting;
         }
     }
 }
