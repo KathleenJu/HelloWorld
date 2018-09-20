@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace HelloWorld
@@ -11,21 +12,21 @@ namespace HelloWorld
 
         public Names()
         {
-            _currentNames = new List<string> { _permanentUser};
+            _currentNames = new List<string> {_permanentUser};
         }
 
         public IEnumerable<string> GetNames()
         {
             return _currentNames;
         }
-        
+
         public void Add(string name)
         {
+            name = CultureInfo.Inv
             if (!_currentNames.Contains(name))
             {
                 _currentNames.Add(name);
             }
-
         }
 
         public void Remove(string name)
@@ -34,13 +35,14 @@ namespace HelloWorld
             {
                 _currentNames.Remove(name);
             }
-
         }
 
         public void Update(string nameToBeUpdated, string newName)
         {
-            _currentNames = _currentNames.Select(name => name == nameToBeUpdated ? newName : name).ToList();
-
+            if (!_currentNames.Contains(newName) & nameToBeUpdated != _permanentUser)
+            {
+                _currentNames = _currentNames.Select(name => name == nameToBeUpdated ? newName : name).ToList();
+            }
         }
     }
 }
