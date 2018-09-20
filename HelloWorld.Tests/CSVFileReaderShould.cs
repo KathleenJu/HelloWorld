@@ -15,7 +15,7 @@ namespace HelloWorld.Tests
         [Fact]
         public void ReadTheFileContents()
         {
-            _testHelper.PopulateCSVWithInitialState(_filePath);
+            _testHelper.SetCSVFile(_filePath);
             
             var expectedFileContent = new List<string> {"Name", "Kathleen"} ;
             var actualFileContent =  _csvFileIO.ReadFileContent(_filePath);
@@ -26,7 +26,7 @@ namespace HelloWorld.Tests
         [Fact]
         public void AppendNewNameToFile()
         {
-            _testHelper.PopulateCSVWithInitialState(_filePath);
+            _testHelper.SetCSVFile(_filePath);
             
             const string newName = "Bob";
             _csvFileIO.AppendToFile(_filePath, newName);
@@ -40,7 +40,7 @@ namespace HelloWorld.Tests
         [Fact]
         public void RewriteNewContentToTheFile()
         {
-            _testHelper.PopulateCSVWithInitialState(_filePath);
+            _testHelper.SetCSVFile(_filePath);
             
             var newContent = new List<string> {"Name", "Kathleen", "Bob"};
             _csvFileIO.RewriteFileWithNewContent(_filePath, newContent);

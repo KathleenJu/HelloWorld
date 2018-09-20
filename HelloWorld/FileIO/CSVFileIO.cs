@@ -11,13 +11,13 @@ namespace HelloWorld
     {
         public IEnumerable<string> ReadFileContent(string filePath)
         {
-            var fileContent = File.ReadLines(filePath).Where(s => !string.IsNullOrWhiteSpace(s));
+            var fileContent = File.ReadLines(filePath);
             return fileContent;
         }
 
         public void AppendToFile(string filePath, string content)
         {
-            content = Environment.NewLine + content;
+//            content = Environment.NewLine + content;
             File.AppendAllText(filePath, content);
         }
 
