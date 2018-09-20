@@ -22,7 +22,7 @@ namespace HelloWorld
 
         public void Add(string name)
         {
-            name = CultureInfo.Inv
+            name = Capitalise(name);
             if (!_currentNames.Contains(name))
             {
                 _currentNames.Add(name);
@@ -39,10 +39,18 @@ namespace HelloWorld
 
         public void Update(string nameToBeUpdated, string newName)
         {
+            nameToBeUpdated = Capitalise(nameToBeUpdated);
+            newName = Capitalise(newName);
             if (!_currentNames.Contains(newName) & nameToBeUpdated != _permanentUser)
             {
                 _currentNames = _currentNames.Select(name => name == nameToBeUpdated ? newName : name).ToList();
             }
+        }
+
+        private static string Capitalise(string name)
+        {
+            var capitalise = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name);
+            return capitalise;
         }
     }
 }
