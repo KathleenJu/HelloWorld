@@ -1,50 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace HelloWorld
 {
-    public class UserManager
+    public class Greeter
     {
-        private readonly string _filePath;
         private const string _permanentUser = "Kathleen";
         private IEnumerable<string> _currentNames;
 
         public IEnumerable<string> CurrentNames => _currentNames;
 
-        public UserManager(string filePath)
+        public Greeter()
         {
-            //_currentUsers = SetCurrentUsers();
-            _filePath = filePath;
             _currentNames = new List<string>();
         }
 
-        public string Greet(IEnumerable<string> users)
+        public string Greet(DateTime dateTime)
         {
-            var foo = GetFormattedListOfUsers(users);
-            var greeting = "Hi " + foo;
+            var listOfNames = GetFormattedListOfUsers(_currentNames);
+            var time = GetFormattedTime(dateTime);
+            var date = GetFormattedDate(dateTime);
+            var greeting = "Hi " + listOfNames;
+            greeting += " - the time on the server is " + time + " on " + date;
             return greeting;
         }
-        
+
+        private static string GetFormattedDate(DateTime dateTime)
+        {
+            var date = dateTime.Day + " " + dateTime.ToString("MMMM") + " " + dateTime.Year;
+            return date;
+        }
+
+        private static string GetFormattedTime(DateTime dateTime)
+        {
+            var time = dateTime.ToString("hh:mmtt").ToLower();
+            return time;
+        }
+
         private string GetFormattedListOfUsers(IEnumerable<string> allUsers)
         {
-            var users = string.Join(", ", allUsers);
-            var lastCommaIndex = users.LastIndexOf(',');
-            users = lastCommaIndex > 0 ? users.Remove(lastCommaIndex, 2).Insert(lastCommaIndex, " and ") : users;
+            var readableListOfNames = string.Join(", ", allUsers);
+            var lastCommaIndex = readableListOfNames.LastIndexOf(',');
+            readableListOfNames = lastCommaIndex > 0 ? readableListOfNames.Remove(lastCommaIndex, 2).Insert(lastCommaIndex, " and ") : readableListOfNames;
 
-            return users;
-        }
-        public string GetUsers()
-        {
-            var fileContent = File.ReadAllText(_filePath).Split(Environment.NewLine)
-                .Where(s => !string.IsNullOrWhiteSpace(s)).Skip(1);
-            var users = GetFormattedListOfUsers(fileContent);
-
-            return users;
+            return readableListOfNames;
         }
 
         public void SetCurrentNames(IEnumerable<string> fileContent)
@@ -58,11 +61,11 @@ namespace HelloWorld
         {
             var fileContent = _currentNames.ToList();
             fileContent.Insert(0, "Name");
-            
+
             return fileContent;
         }
 
-        public void AddNewUser(string name)
+        public void AddName(string name)
         {
             var names = _currentNames.ToList();
             if (!names.Contains(name))
@@ -73,10 +76,10 @@ namespace HelloWorld
             _currentNames = names;
         }
 
-        public void RemoveUser(string name)
+        public void RemoveName(string name)
         {
             var names = _currentNames.ToList();
-            if (names.Contains(name))
+            if (names.Contains(name) & name != _permanentUser)
             {
                 names.Remove(name);
             }

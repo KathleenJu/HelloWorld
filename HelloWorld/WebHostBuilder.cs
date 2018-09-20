@@ -13,7 +13,9 @@ namespace HelloWorld
 {
     public static class WebHostBuilder
     {
-        private static readonly UserManager UserManager = new UserManager(@"Files/users.csv");
+        private static readonly Greeter Greeter = new Greeter();
+        private static readonly CSVFileIO CSVFileIO = new CSVFileIO();
+        private const string _filePath = @"Files/users.csv";
 
         public static void StartWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
@@ -21,61 +23,57 @@ namespace HelloWorld
                 {
                     app.Run(async context =>
                     {
-                        await Foo(context);
+                        var currentDateTime = DateTime.Now;
+                        await Foo(context, currentDateTime);
                     });
                 }).Build().Run();
 
-        private static async Task Foo(HttpContext context)
+        private static async Task Foo(HttpContext context, DateTime dateTime)
         {
+            context.Response.StatusCode = 200;
             switch (context.Request.Method)
             {
                 case "GET":
-                    await GetResponseForGETRequest(context);
+                {
+                    var fileContent = CSVFileIO.ReadFileContent(_filePath);
+                    Greeter.SetCurrentNames(fileContent);
+                    
+                    var greeting = Greeter.Greet(dateTime);
+                    await context.Response.WriteAsync(greeting);
                     break;
+                }
                 case "POST":
-                    await GetResponseForPOSTRequest(context);
+                {
+                    var newName = new StreamReader(context.Request.Body).ReadToEnd();
+                    Greeter.AddName(newName);
+                    CSVFileIO.RewriteFileWithNewContent(_filePath, Greeter.CurrentNames);
+
+                    var greeting = Greeter.Greet(dateTime);
+                    await context.Response.WriteAsync(greeting);
                     break;
+                }
                 case "DELETE":
-                    await GetResponseForDELETERequest(context);
+                {
+                    var nameToBeDeleted = new StreamReader(context.Request.Body).ReadToEnd();
+                    Greeter.RemoveName(nameToBeDeleted);
+                    CSVFileIO.RewriteFileWithNewContent(_filePath, Greeter.CurrentNames);
+
+                    var greeting = Greeter.Greet(dateTime);
+                    await context.Response.WriteAsync(greeting);
                     break;
+                }
                 case "PUT":
-                    await GetResponseForPUTRequest(context);
+                {
+                    var nameToBeUpdated = context.Request.Path.Value.Trim('/');
+                    var newName = new StreamReader(context.Request.Body).ReadToEnd();
+                    Greeter.UpdateUser(nameToBeUpdated, newName);
+                    CSVFileIO.RewriteFileWithNewContent(_filePath, Greeter.CurrentNames);
+
+                    var greeting = Greeter.Greet(dateTime);
+                    await context.Response.WriteAsync(greeting);
                     break;
+                }
             }
-        }
-
-        //greet(){ "Hi x.GetUsers(fileContent) - time on the server..."}
-        private static async Task GetResponseForPUTRequest(HttpContext context)
-        {
-            context.Response.StatusCode = 200;
-            var nameToBeUpdated = context.Request.Path.Value.Trim('/');
-            var newName = new StreamReader(context.Request.Body).ReadToEnd();
-            UserManager.UpdateUser(nameToBeUpdated, newName);
-            await context.Response.WriteAsync(UserManager.GetUsers());
-        }
-
-        private static async Task GetResponseForDELETERequest(HttpContext context)
-        {
-            context.Response.StatusCode = 200;
-            var body = new StreamReader(context.Request.Body).ReadToEnd();
-            UserManager.RemoveUser(body);
-
-            await context.Response.WriteAsync(UserManager.GetUsers());
-        }
-
-        private static async Task GetResponseForGETRequest(HttpContext context)
-        {
-            context.Response.StatusCode = 200;
-            await context.Response.WriteAsync(UserManager.GetUsers());
-        }
-
-        //doing two things in switch statement, it says post but function is getting something(from its name)
-        private static async Task GetResponseForPOSTRequest(HttpContext context)
-        {
-            context.Response.StatusCode = 200;
-            var newName = new StreamReader(context.Request.Body).ReadToEnd();
-            UserManager.AddNewUser(newName);
-            await context.Response.WriteAsync(UserManager.GetUsers());
         }
     }
 }

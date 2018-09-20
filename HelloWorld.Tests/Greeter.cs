@@ -1,11 +1,12 @@
 using System;
+using HelloWorld;
 using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
 
 namespace HelloWorld.Tests
 {
-    public class UserManagerShould
+    public class GreeterShould
     { 
         private readonly Greeter _greeter = new Greeter();
         
@@ -16,7 +17,7 @@ namespace HelloWorld.Tests
             var fileContent = new List<string>{"Name", "Kathleen"};
             _greeter.SetCurrentNames(fileContent);
             const string user = "Bob";
-            _greeter.AddNewUser(user);
+            _greeter.AddName(user);
             
             var actualUsers = _greeter.CurrentNames;
             var expectedUsers = new List<string> {"Kathleen", "Bob"};
