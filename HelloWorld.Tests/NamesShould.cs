@@ -10,9 +10,8 @@ namespace HelloWorld.Tests
     { 
         private readonly Names Names = new Names();
         
-        
         [Fact]
-        public void AddNewUser()
+        public void AddNewName()
         {
             const string user = "Bob";
             Names.Add(user);
@@ -24,7 +23,7 @@ namespace HelloWorld.Tests
         }
         
         [Fact]
-        public void RemoveAUserFromCSVFile()
+        public void RemoveAnExistingName()
         {
             const string user = "Bob";
             Names.Remove(user);
@@ -36,7 +35,7 @@ namespace HelloWorld.Tests
         }
         
         [Fact]
-        public void UpdateNameOfUserFromCSVFile()
+        public void UpdateNameOfExistingName()
         {
             const string nameToBeUpdated = "Bob";
             Names.Add(nameToBeUpdated);

@@ -23,43 +23,46 @@ namespace HelloWorld
                     app.Run(async context =>
                     {
                         var currentDateTime = DateTime.Now;
-                        await Foo(context, currentDateTime);
+                        await ExecuteRequestMethod(context, currentDateTime);
                     });
                 }).Build().Run();
 
-        private static async Task Foo(HttpContext context, DateTime dateTime)
+        private static async Task ExecuteRequestMethod(HttpContext context, DateTime dateTime)
         {
             context.Response.StatusCode = 200;
             switch (context.Request.Method)
             {
                 case "GET":
                 {
-                    var greeting = GetGreeting(dateTime);
-                    await context.Response.WriteAsync(greeting);
+                    await DisplayResponse(context, dateTime);
                     break;
                 }
                 case "POST":
                 {
                     PostName(context);
-                    var greeting = GetGreeting(dateTime);
-                    await context.Response.WriteAsync(greeting);
+                    await DisplayResponse(context, dateTime);
                     break;
                 }
                 case "DELETE":
                 {
                     DeleteName(context);
-                    var greeting = GetGreeting(dateTime);
-                    await context.Response.WriteAsync(greeting);
+                    await DisplayResponse(context, dateTime);
                     break;
                 }
                 case "PUT":
                 {
                     UpdateName(context);
-                    var greeting = GetGreeting(dateTime);
-                    await context.Response.WriteAsync(greeting);
+                    await DisplayResponse(context, dateTime);
                     break;
                 }
             }
+        }
+
+        //post response?
+        private static async Task DisplayResponse(HttpContext context, DateTime dateTime)
+        {
+            var greeting = GetGreeting(dateTime);
+            await context.Response.WriteAsync(greeting);
         }
 
         private static void UpdateName(HttpContext context)
