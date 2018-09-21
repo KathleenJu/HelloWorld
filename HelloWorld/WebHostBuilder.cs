@@ -16,7 +16,7 @@ namespace HelloWorld
         private static readonly Greeter _greeter = new Greeter();
         private static readonly Names _names = new Names();
 
-        public static void StartWebHost(string[] args) =>
+        public static void StartWebHost(string[] args) =>        
             WebHost.CreateDefaultBuilder(args)
                 .Configure(app =>
                 {
@@ -28,7 +28,7 @@ namespace HelloWorld
                 }).Build().Run();
 
         private static async Task ExecuteRequestMethod(HttpContext context, DateTime dateTime)
-        {
+        {            
             context.Response.StatusCode = 200;
             switch (context.Request.Method)
             {

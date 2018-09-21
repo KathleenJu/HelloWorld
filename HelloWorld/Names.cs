@@ -31,6 +31,7 @@ namespace HelloWorld
 
         public void Remove(string name)
         {
+            name = Capitalise(name);
             if (_currentNames.Contains(name) & name != _permanentUser)
             {
                 _currentNames.Remove(name);
