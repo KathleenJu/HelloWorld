@@ -58,7 +58,6 @@ namespace HelloWorld
             }
         }
 
-        //post response?
         private static async Task DisplayResponse(HttpContext context, DateTime dateTime)
         {
             var greeting = GetGreeting(dateTime);
